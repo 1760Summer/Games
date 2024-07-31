@@ -1,0 +1,7 @@
+{
+  "name": "YDX",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

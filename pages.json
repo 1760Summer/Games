@@ -1,0 +1,50 @@
+{
+	"easycom": {
+		"custom": {
+			"^u--(.*)": "uview-plus/components/u-$1/u-$1.vue",
+			"^up-(.*)": "uview-plus/components/u-$1/u-$1.vue",
+			"u-([^-].*)": "uview-plus/components/u-$1/u-$1.vue"
+		}
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "游戏合集",
+				"enablePullDownRefresh": false,
+				"onReachBottomDistance": 10
+			}
+		}, {
+			"path": "pages/game/2048/index",
+			"style": {
+				"navigationBarTitleText": "2048",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/game/Klotski/index",
+			"style": {
+				"navigationBarTitleText": "华容道",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/game/GenShin/index",
+			"style": {
+				"navigationBarTitleText": "原神抽卡",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		}
+    ],
+	"globalStyle": {
+		"navigationStyle": "custom",
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "游戏合集",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {}
+}

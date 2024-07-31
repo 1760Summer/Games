@@ -1,0 +1,7 @@
+{
+  "name": "G_ALL",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
