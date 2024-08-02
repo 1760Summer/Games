@@ -15,5 +15,5 @@ db.collection('G_ALL').get()
 //获取原神UP角色武器
 db.collection('G_ALL').where({G_UP:"Y"}).get()
 //更新UP角色武器
-db.collection("G_ALL").where({G_NAME:"暗巷闪光"}).update({G_UP:"Y"})
+db.collection("G_ALL").where({G_NAME:"雾切之回光"}).update({G_UP:"Y"})
 
