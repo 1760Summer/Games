@@ -1,4 +1,4 @@
-<!--原神抽卡-->
+<!--原神抽卡a-->
 <template>
 	<view>
 		<u-subsection :list="list" :current="current" @change="changePool"></u-subsection>
