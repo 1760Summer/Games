@@ -175,31 +175,33 @@
 			},
 			//切换武器定轨
 			ChangeDetermine2(e){
-				uni.showModal({
-					content:"切换定轨会清空定轨值，您确定要切换吗？",
-					showCancel: true,
-					success:(res)=>{
-						if(res.confirm){
-							this.upa_determine=e
-							this.upa_askew_golden_count=0
-							this.upa_askew_golden_limit=''
-							//非定轨赋值
-							for(var i=0;i<this.up_arms_5.length;i++){
-								if(this.upa_determine!=this.up_arms_5[i]){
-									this.upa_ndetermine = this.up_arms_5[i]
+				if(this.upa_askew_golden_count>0){
+					uni.showModal({
+						content:"切换定轨会清空定轨值，您确定要切换吗？",
+						showCancel: true,
+						success:(res)=>{
+							if(res.confirm){
+								this.upa_determine=e
+								this.upa_askew_golden_count=0
+								this.upa_askew_golden_limit=''
+								//非定轨赋值
+								for(var i=0;i<this.up_arms_5.length;i++){
+									if(this.upa_determine!=this.up_arms_5[i]){
+										this.upa_ndetermine = this.up_arms_5[i]
+									}
+								}
+							}else if(res.cancel){
+								this.upa_ndetermine = e
+								//定轨赋值
+								for(var i=0;i<this.up_arms_5.length;i++){
+									if(this.upa_ndetermine!=this.up_arms_5[i]){
+										this.upa_determine = this.up_arms_5[i]
+									}
 								}
 							}
-						}else if(res.cancel){
-							this.upa_ndetermine = e
-							//定轨赋值
-							for(var i=0;i<this.up_arms_5.length;i++){
-								if(this.upa_ndetermine!=this.up_arms_5[i]){
-									this.upa_determine = this.up_arms_5[i]
-								}
-							}
-						}
-					},
-				})
+						},
+					})
+				}
 			},
 			// 常驻抽卡 1次 or 10次
 			clickGoodLuck(times) {
@@ -422,6 +424,7 @@
 						    let ship = this.shipmentUP2("golden","N",0);
 							this.upa_content+="<p style='background-color: #f9ff80'>小保底获得:"+ship+",抽卡次数:"+this.upa_totoalCount+"</p>";
 							this.upa_content2+="<p>"+ship+":"+Number(this.upa_accNoGoldenCount+1)+"抽</p>"
+							this.upa_askew_golden_count = 0;
 							this.initAwardedGoldenUP2();
 							return;
 						}else{
@@ -452,6 +455,7 @@
 						    let ship = this.shipmentUP2("golden","N",0);
 							this.upa_content+="<p style='background-color: #f9ff80'>恭喜欧皇获得:"+ship+",抽卡次数:"+this.upa_totoalCount+"</p>";
 							this.upa_content2+="<p>"+ship+":"+Number(this.upa_accNoGoldenCount+1)+"抽</p>"
+							this.upa_askew_golden_count = 0;
 							this.initAwardedGoldenUP2();
 							return;
 						}else{
