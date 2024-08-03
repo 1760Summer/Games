@@ -2,20 +2,20 @@
 <template>
 	<view>
 		<u-subsection :list="list" :current="current" @change="changePool"></u-subsection>
-		<view v-if="current==0">
-			<view style="background-color: #ffcdcd;">
+		<view v-if="current==0" class="wrap">
+			<view>
 				<view>距离下次出金还有：{{90-this.accNoGoldenCount}}次</view>
 				<view>距离下次出紫还有：{{10-this.accNoVioletCount}}次</view>
 				<u-parse :content="content" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
 			<u-button @click="clickGoodLuck(1)" type="primary" :plain="true" style="margin-bottom: 10px;">抽一次</u-button>
 			<u-button @click="clickGoodLuck(10)" type="primary" :plain="true">抽十次</u-button>
-			<view style="background-color: #e893ff;">
+			<view>
 				<u-parse :content="content2" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
 		</view>
-		<view v-else-if="current==1">
-			<view style="background-color: #ffcdcd;">
+		<view v-else-if="current==1" class="wrap">
+			<view>
 				<view>定轨：
 					<u-radio-group v-for="(item,index) in up_role_5" :key="index" v-model="up_determine" @change="ChangeDetermine">
 						<u-radio :name="up_role_5[index]" :label="up_role_5[index]"></u-radio>
@@ -27,12 +27,12 @@
 			</view>
 			<u-button @click="clickGoodLuckUP(1)" type="primary" :plain="true" style="margin-bottom: 10px;">抽一次</u-button>
 			<u-button @click="clickGoodLuckUP(10)" type="primary" :plain="true">抽十次</u-button>
-			<view style="background-color: #e893ff;">
+			<view>
 				<u-parse :content="up_content2" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
 		</view>
-		<view v-else-if="current==2">
-			<view style="background-color: #ffcdcd;">
+		<view v-else-if="current==2" class="wrap">
+			<view>
 				<view>定轨：
 					<u-radio-group v-for="(item,index) in up_arms_5" :key="index" v-model="upa_determine" @change="ChangeDetermine2">
 						<u-radio :name="up_arms_5[index]" :label="up_arms_5[index]"></u-radio>
@@ -44,7 +44,7 @@
 			</view>
 			<u-button @click="clickGoodLuckUP2(1)" type="primary" :plain="true" style="margin-bottom: 10px;">抽一次</u-button>
 			<u-button @click="clickGoodLuckUP2(10)" type="primary" :plain="true">抽十次</u-button>
-			<view style="background-color: #e893ff;">
+			<view>
 				<u-parse :content="upa_content2" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
 		</view>
@@ -593,5 +593,8 @@
 	}
 </script>
 <style lang="scss">
-	
+	.wrap {
+		padding: 30rpx;
+		background-color: #ffcdcd;
+	}
 </style>
