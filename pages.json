@@ -36,7 +36,35 @@
 				"navigationStyle": "custom",
 				"enablePullDownRefresh": false
 			}
-		}
+		}, {
+			"path": "pages/game/Tetris/index",
+			"style": {
+				"navigationBarTitleText": "俄罗斯方块",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/game/test/index",
+			"style": {
+				"navigationBarTitleText": "测试",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},{
+            "path" : "uni_modules/HF-HF_debugging/pages/next/next",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "手机调试工具",
+				"navigationStyle": "custom",
+				"backgroundColor": "transparent",
+				"app-plus": {
+					"animationType": "slide-in-bottom",
+					"background": "transparent",
+					"popGesture": "none"
+				}
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",

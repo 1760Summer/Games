@@ -3,7 +3,7 @@
 		<image class="banner" src="@/static/index/xy1.jpg" mode="widthFix"></image>
 		<view class="list">
 			<view class="game-item" v-for="item in gameBox" @tap="goInfo(item.path)">
-				<image class="face" :src="item.faceImg" mode="widthFix"></image>
+				<image class="face" :src="item.faceImg" mode="aspectFit"></image>
 				<view class="name">{{item.name}}</view>
 			</view>
 		</view>
@@ -17,20 +17,30 @@
 			return {
 				gameBox: [
 					{
+						name: '原神抽卡',
+						path: '/pages/game/GenShin/index',
+						faceImg: '../../static/index/lr1.jpg'
+					},
+					{
+						name: '俄罗斯方块',
+						path: '/pages/game/Tetris/index',
+						faceImg: '../../static/index/lr2.jpg'
+					},
+					{
 						name: '2048',
 						path: '/pages/game/2048/index',
-						faceImg: '../../static/index/lr1.jpg'
+						faceImg: '../../static/index/lr3.jpg'
 					},
 					{
 						name: '华容道',
 						path: '/pages/game/Klotski/index',
-						faceImg: '../../static/index/lr2.jpg'
+						faceImg: '../../static/index/lr4.jpg'
 					},
 					{
-						name: '原神抽卡',
-						path: '/pages/game/GenShin/index',
-						faceImg: '../../static/index/lr2.jpg'
-					}
+						name: '测试专区',
+						path: '/pages/game/test/index',
+						faceImg: '../../static/index/lr4.jpg'
+					},
 				]
 			}
 		},

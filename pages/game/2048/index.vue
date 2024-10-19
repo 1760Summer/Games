@@ -35,6 +35,7 @@
 		created() {
 		},
 		methods:{
+			//滑动很抽象！！！怎么改！！！
 			//开始触摸
 			handleTouchStart(event) {
 			   this.touchStartX = event.touches[0].clientX;
@@ -75,7 +76,7 @@
 				}
 			},
 			//向上移动
-			async MoveUp(){
+			MoveUp(){
 				var moved = false;//是否移动
 				for(var j = 0; j < this.gridSize; j++){//列标
 					for(var i = 1; i < this.gridSize; i++){//行标
@@ -104,7 +105,7 @@
 				}
 			},
 			//向下移动
-			async MoveDown(){
+			MoveDown(){
 				var moved = false;//是否移动
 				for(var j = 0; j < this.gridSize; j++){
 					for(var i = this.gridSize-2; i >= 0; i--){
@@ -133,7 +134,7 @@
 				}
 			},
 			//向左移动
-			async MoveLeft(){
+			MoveLeft(){
 				var moved = false;//是否移动
 				for(var i = 0; i < this.gridSize; i++){
 					for(var j = 1; j < this.gridSize; j++){
@@ -162,7 +163,7 @@
 				}
 			},
 			//向右移动
-			async MoveRight(){
+			MoveRight(){
 				var moved = false;//是否移动
 				for(var i = 0; i < this.gridSize; i++){
 					for(var j = this.gridSize-2; j >= 0; j--){

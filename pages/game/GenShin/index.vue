@@ -417,7 +417,7 @@
 					return;
 				}
 				//是否出金 出金小保低
-				if(this.upa_accNoGoldenCount>73){
+				if(this.upa_accNoGoldenCount>63){
 					if (this.upa_p_golden >= randomGolden) {
 						let randomAskew = (Math.random() * 100).toFixed(2);
 						if(this.upa_p_askew_golden >= randomAskew){//不歪
@@ -448,7 +448,7 @@
 					}
 				}
 				//是否出金  出金小欧皇
-				if(this.upa_accNoGoldenCount<=73){
+				if(this.upa_accNoGoldenCount<=63){
 					if (this.upa_p_golden >= randomGolden) {
 						let randomAskew = (Math.random() * 100).toFixed(2);
 						if(this.upa_p_askew_golden >= randomAskew){//不歪
