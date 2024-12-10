@@ -627,7 +627,7 @@
 			},
 		}
 	}
-</script>
+</script> 
 <style lang="scss">
 	.wrap {
 		padding: 30rpx;
