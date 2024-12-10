@@ -8,8 +8,14 @@
 				<view>距离下次出紫还有：{{10-this.accNoVioletCount}}次</view>
 				<u-parse :content="content" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
-			<u-button @click="clickGoodLuck(1)" type="primary" :plain="true" style="margin-bottom: 10px;">抽一次</u-button>
-			<u-button @click="clickGoodLuck(10)" type="primary" :plain="true">抽十次</u-button>
+			<view style="display: flex;justify-content: center;background-color: white;">
+				<u-input type="text" v-model="frequency" placeholder=""></u-input>
+			</view>
+			<view style="display: flex;justify-content: center;">
+				<u-button @click="clickGoodLuck(1,null)" type="primary" :plain="true">抽一次</u-button>
+				<u-button @click="clickGoodLuck(10,null)" type="primary" :plain="true">抽十次</u-button>
+				<u-button @click="clickGoodLuck(frequency,'SIM')" type="primary" :plain="true">自定义次数</u-button>
+			</view>
 			<view>
 				<u-parse :content="content2" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
@@ -25,8 +31,14 @@
 				<view>距离下次出紫还有：{{10-this.up_accNoVioletCount}}次</view>
 				<u-parse :content="up_content" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
-			<u-button @click="clickGoodLuckUP(1)" type="primary" :plain="true" style="margin-bottom: 10px;">抽一次</u-button>
-			<u-button @click="clickGoodLuckUP(10)" type="primary" :plain="true">抽十次</u-button>
+			<view style="display: flex;justify-content: center;background-color: white;">
+				<u-input type="text" v-model="frequency" placeholder=""></u-input>
+			</view>
+			<view style="display: flex;justify-content: center;">
+				<u-button @click="clickGoodLuckUP(1,null)" type="primary" :plain="true">抽一次</u-button>
+				<u-button @click="clickGoodLuckUP(10,null)" type="primary" :plain="true">抽十次</u-button>
+				<u-button @click="clickGoodLuckUP(frequency,'SIM')" type="primary" :plain="true">自定义次数</u-button>
+			</view>
 			<view>
 				<u-parse :content="up_content2" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
@@ -42,8 +54,14 @@
 				<view>距离下次出紫还有：{{10-this.upa_accNoVioletCount}}次</view>
 				<u-parse :content="upa_content" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
-			<u-button @click="clickGoodLuckUP2(1)" type="primary" :plain="true" style="margin-bottom: 10px;">抽一次</u-button>
-			<u-button @click="clickGoodLuckUP2(10)" type="primary" :plain="true">抽十次</u-button>
+			<view style="display: flex;justify-content: center;background-color: white;">
+				<u-input type="text" v-model="frequency" placeholder=""></u-input>
+			</view>
+			<view style="display: flex;justify-content: center;">
+				<u-button @click="clickGoodLuckUP2(1,null)" type="primary" :plain="true">抽一次</u-button>
+				<u-button @click="clickGoodLuckUP2(10,null)" type="primary" :plain="true">抽十次</u-button>
+				<u-button @click="clickGoodLuckUP2(frequency,'SIM')" type="primary" :plain="true">自定义次数</u-button>
+			</view>
 			<view>
 				<u-parse :content="upa_content2" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
@@ -55,6 +73,8 @@
 	export default{
 		data(){
 			return{
+				//模拟抽奖次数（默认10w次）
+				frequency: 100000,
 				//卡池属性
 				list:[{name: '常驻祈愿'},{name: '限定祈愿'},{name: '武器祈愿'}],  //卡池类型
 				current: 0,                                   //选中的当前卡池
@@ -204,26 +224,38 @@
 				}
 			},
 			// 常驻抽卡 1次 or 10次
-			clickGoodLuck(times) {
-				if (times == 1) {
+			clickGoodLuck(times,type) {
+				if(type=="SIM"){//模拟
+				    for (let i = 0; i < times; i++) {
+				    	this.computeProOne();
+				    }
+				}else if (times == 1) {
 					this.computeProOne();
-				} else {
+				} else if (times == 10){
 					this.computeProTen();
 				}
 			},
 			// 限定角色抽卡 1次 or 10次
-			clickGoodLuckUP(times) {
-				if (times == 1) {
+			clickGoodLuckUP(times,type) {
+				if(type=="SIM"){
+					for (let i = 0; i < times; i++) {
+						this.computeProOneUP();
+					}
+				}else if (times == 1) {
 					this.computeProOneUP();
-				} else {
+				} else if (times == 10){
 					this.computeProTenUP();
 				}
 			},
 			// 限定武器抽卡 1次 or 10次
-			clickGoodLuckUP2(times) {
-				if (times == 1) {
+			clickGoodLuckUP2(times,type) {
+				if(type=="SIM"){
+					for (let i = 0; i < times; i++) {
+						this.computeProOneUP2();
+					}
+				}else if (times == 1) {
 					this.computeProOneUP2();
-				} else {
+				} else if (times == 10){
 					this.computeProTenUP2();
 				}
 			},
