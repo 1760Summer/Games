@@ -23,6 +23,10 @@
 			"bsonType": "string",
 			"description": "类型"
 		},
+		"G_ATTRIBUTE": {
+			"bsonType": "string",
+			"description": "属性"
+		},
 		"G_LIMIT": {
 			"bsonType": "string",
 			"description": "是否限定（Y限定，N常驻）"

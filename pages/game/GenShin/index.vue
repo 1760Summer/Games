@@ -4,6 +4,7 @@
 		<u-subsection :list="list" :current="current" @change="changePool"></u-subsection>
 		<view v-if="current==0" class="wrap">
 			<view>
+				<view>更新至5.3版本</view>
 				<view>距离下次出金还有：{{90-this.accNoGoldenCount}}次</view>
 				<view>距离下次出紫还有：{{10-this.accNoVioletCount}}次</view>
 				<u-parse :content="content" style="height: 300px;overflow-y: auto;"></u-parse>
@@ -17,6 +18,7 @@
 				<u-button @click="clickGoodLuck(frequency,'SIM')" type="primary" :plain="true">自定义次数</u-button>
 			</view>
 			<view>
+				<view>已抽：{{this.totoalCount}}，总出金数：{{this.c_golden}}，平均出金：{{this.ave_golden}}</view>
 				<u-parse :content="content2" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
 		</view>
@@ -40,6 +42,8 @@
 				<u-button @click="clickGoodLuckUP(frequency,'SIM')" type="primary" :plain="true">自定义次数</u-button>
 			</view>
 			<view>
+				<view>已抽：{{this.up_totoalCount}}，总出金数：{{this.up_c_golden}}，平均出金：{{this.up_ave_golden}}</view>
+				<view>不歪：{{this.up_golden_allcount}}，不歪概率：{{this.up_golden_probability}}，每限定：{{this.up_golden_limit}}</view>
 				<u-parse :content="up_content2" style="height: 300px;overflow-y: auto;"></u-parse>
 			</view>
 		</view>
@@ -94,6 +98,8 @@
 				totoalCount: 0,				    //总抽卡次数
 				accNoGoldenCount: 0, 		    //不出金次数
 				accNoVioletCount: 0, 		    //不出紫次数
+				c_golden: 0,                    //出金次数
+				ave_golden: 0,                  //平均每金抽数
 				awardColor: "blue",			    //出啥颜色卡
 				content:'',                     //文本
 				content2:'',                    //文本
@@ -103,11 +109,16 @@
 				up_p_violet: 5.1,	           //紫卡基础概率
 				up_p_askew_golden: 50,         //金卡不歪概率
 				up_p_askew_violet: 50,         //紫卡不歪概率
-				up_totoalCount: 0,		      //总抽卡次数
-				up_accNoGoldenCount: 0,       //不出金次数
-				up_accNoVioletCount: 0, 	 //不出紫次数
-				up_askew_golden_count: 0,    //金卡歪卡次数
-				up_askew_violet_count: 0,    //紫卡歪卡次数
+				up_totoalCount: 0,		       //总抽卡次数
+				up_accNoGoldenCount: 0,        //不出金次数
+				up_accNoVioletCount: 0, 	   //不出紫次数
+				up_askew_golden_count: 0,      //金卡歪卡次数
+				up_askew_violet_count: 0,      //紫卡歪卡次数
+				up_c_golden: 0,                //出金次数
+				up_ave_golden: 0,              //平均每金抽数
+				up_golden_allcount: 0,   //金卡不歪总次数
+				up_golden_probability: 0,    //金卡不歪概率
+				up_golden_limit: 0,          //每个限定所需抽数
 				up_awardColor: "blue",		 //出啥颜色卡
 				up_content:'',               //文本
 				up_content2:'',              //文本
@@ -226,9 +237,17 @@
 			// 常驻抽卡 1次 or 10次
 			clickGoodLuck(times,type) {
 				if(type=="SIM"){//模拟
-				    for (let i = 0; i < times; i++) {
-				    	this.computeProOne();
-				    }
+				if(times>100000){
+					uni.showModal({
+						title: "提示：",
+						content: "超负荷啦！不得多于100000！",
+						showCancel: false,
+					})
+				}else{
+					for (let i = 0; i < times; i++) {
+						this.computeProOne();
+					}
+				}
 				}else if (times == 1) {
 					this.computeProOne();
 				} else if (times == 10){
@@ -238,8 +257,16 @@
 			// 限定角色抽卡 1次 or 10次
 			clickGoodLuckUP(times,type) {
 				if(type=="SIM"){
-					for (let i = 0; i < times; i++) {
-						this.computeProOneUP();
+					if(times>100000){
+						uni.showModal({
+							title: "提示：",
+							content: "超负荷啦！不得多于100000！",
+							showCancel: false,
+						})
+					}else{
+						for (let i = 0; i < times; i++) {
+							this.computeProOneUP();
+						}
 					}
 				}else if (times == 1) {
 					this.computeProOneUP();
@@ -250,8 +277,16 @@
 			// 限定武器抽卡 1次 or 10次
 			clickGoodLuckUP2(times,type) {
 				if(type=="SIM"){
-					for (let i = 0; i < times; i++) {
-						this.computeProOneUP2();
+					if(times>100000){
+						uni.showModal({
+							title: "提示：",
+							content: "超负荷啦！不得多于100000！",
+							showCancel: false,
+						})
+					}else{
+						for (let i = 0; i < times; i++) {
+							this.computeProOneUP2();
+						}
 					}
 				}else if (times == 1) {
 					this.computeProOneUP2();
@@ -306,6 +341,8 @@
 					    let ship = this.shipment("golden");
 						this.content+="<p style='background-color: #f9ff80'>保底获得:"+ship+",抽卡次数:"+this.totoalCount+"</p>";
 						this.content2+="<p>"+ship+":"+Number(this.accNoGoldenCount+1)+"抽</p>"
+						this.c_golden++
+						this.ave_golden = (this.totoalCount/this.c_golden).toFixed(0)
 						this.initAwardedGolden();
 						return;
 					}else{
@@ -318,6 +355,8 @@
 						let ship = this.shipment("golden");
 						this.content+="<p style='background-color: #f9ff80'>恭喜欧皇获得:"+ship+",抽卡次数:"+this.totoalCount+"</p>";
 						this.content2+="<p>"+ship+":"+Number(this.accNoGoldenCount+1)+"抽</p>"
+						this.c_golden++
+						this.ave_golden = (this.totoalCount/this.c_golden).toFixed(0)
 						this.initAwardedGolden();
 						return;
 					}
@@ -353,6 +392,11 @@
 					this.up_content+="<p style='background-color: #f9ff80'>大保底获得:"+ship+",抽卡次数："+this.up_totoalCount+"</p>";
 					this.up_content2+="<p>"+ship+":"+Number(this.up_accNoGoldenCount+1)+"抽</p>"
 					this.up_askew_golden_count = 0;
+					this.up_c_golden++
+					this.up_golden_allcount++
+					this.up_ave_golden = (this.up_totoalCount/this.up_c_golden).toFixed(0)
+					this.up_golden_probability = (this.up_golden_allcount/(Math.floor(((this.up_c_golden-this.up_golden_allcount)/2))+this.up_golden_allcount)*100).toFixed(2)
+					this.up_golden_limit = (this.up_totoalCount/(this.up_golden_allcount+Math.floor(((this.up_c_golden-this.up_golden_allcount)/2)))).toFixed(0)
 					this.initAwardedGoldenUP();
 					return;
 				}
@@ -364,6 +408,11 @@
 						    let ship = this.shipmentUP("golden","N");
 							this.up_content+="<p style='background-color: #f9ff80'>小保底获得:"+ship+",抽卡次数:"+this.up_totoalCount+"</p>";
 							this.up_content2+="<p>"+ship+":"+Number(this.up_accNoGoldenCount+1)+"抽</p>"
+							this.up_c_golden++
+							this.up_golden_allcount++
+							this.up_ave_golden = (this.up_totoalCount/this.up_c_golden).toFixed(0)
+							this.up_golden_probability = (this.up_golden_allcount/(Math.floor(((this.up_c_golden-this.up_golden_allcount)/2))+this.up_golden_allcount)*100).toFixed(2)
+							this.up_golden_limit = (this.up_totoalCount/(this.up_golden_allcount+Math.floor(((this.up_c_golden-this.up_golden_allcount)/2)))).toFixed(0)
 							this.initAwardedGoldenUP();
 							return;
 						}else{
@@ -371,6 +420,10 @@
 							let ship = this.shipmentUP("golden","Y");
 							this.up_content+="<p style='background-color: #f9ff80'>小保底获得:"+ship+"(歪),抽卡次数:"+this.up_totoalCount+"</p>";
 							this.up_content2+="<p>"+ship+":"+Number(this.up_accNoGoldenCount+1)+"抽</p>"
+							this.up_c_golden++
+							this.up_ave_golden = (this.up_totoalCount/this.up_c_golden).toFixed(0)
+							this.up_golden_probability = (this.up_golden_allcount/(Math.floor(((this.up_c_golden-this.up_golden_allcount)/2))+this.up_golden_allcount)*100).toFixed(2)
+							this.up_golden_limit = (this.up_totoalCount/(this.up_golden_allcount+Math.floor(((this.up_c_golden-this.up_golden_allcount)/2)))).toFixed(0)
 							this.initAwardedGoldenUP();
 							return;
 						}
@@ -386,6 +439,11 @@
 						    let ship = this.shipmentUP("golden","N");
 							this.up_content+="<p style='background-color: #f9ff80'>恭喜欧皇获得:"+ship+",抽卡次数:"+this.up_totoalCount+"</p>";
 							this.up_content2+="<p>"+ship+":"+Number(this.up_accNoGoldenCount+1)+"抽</p>"
+							this.up_c_golden++
+							this.up_golden_allcount++
+							this.up_ave_golden = (this.up_totoalCount/this.up_c_golden).toFixed(0)
+							this.up_golden_probability = (this.up_golden_allcount/(Math.floor(((this.up_c_golden-this.up_golden_allcount)/2))+this.up_golden_allcount)*100).toFixed(2)
+							this.up_golden_limit = (this.up_totoalCount/(this.up_golden_allcount+Math.floor(((this.up_c_golden-this.up_golden_allcount)/2)))).toFixed(0)
 							this.initAwardedGoldenUP();
 							return;
 						}else{
@@ -393,6 +451,10 @@
 							let ship = this.shipmentUP("golden","Y");
 							this.up_content+="<p style='background-color: #f9ff80'>恭喜欧皇获得:"+ship+"(歪),抽卡次数:"+this.up_totoalCount+"</p>";
 							this.up_content2+="<p>"+ship+":"+Number(this.up_accNoGoldenCount+1)+"抽</p>"
+							this.up_c_golden++
+							this.up_ave_golden = (this.up_totoalCount/this.up_c_golden).toFixed(0)
+							this.up_golden_probability = (this.up_golden_allcount/(Math.floor(((this.up_c_golden-this.up_golden_allcount)/2))+this.up_golden_allcount)*100).toFixed(2)
+							this.up_golden_limit = (this.up_totoalCount/(this.up_golden_allcount+Math.floor(((this.up_c_golden-this.up_golden_allcount)/2)))).toFixed(0)
 							this.initAwardedGoldenUP();
 							return;
 						}
